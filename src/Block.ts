@@ -19,10 +19,10 @@ export class Block{
         this.location = location;
         this.type = type;
     }
-    getYaw(location:Coordinate):number{
+    getYaw():number{
         let yaw = 0;
-        const posX = location.posX;
-        const posY = location.posY;
+        const posX = this.location.posX;
+        const posY = this.location.posY;
         yaw = posY/posX;
         return yaw;
     }
