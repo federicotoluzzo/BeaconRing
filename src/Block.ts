@@ -26,6 +26,27 @@ export class Block{
         yaw = posY/posX;
         return yaw;
     }
+
+    getStyle(){
+        let type = "";
+        switch(this.type){
+            case blockType.BEACON:
+                type = "beacon";
+                break;
+            case blockType.CENTER:
+                type = "center";
+                break;
+            case blockType.EDGE:
+                type = "edge";
+                break;
+            case blockType.SELECTED:
+                type = "selected";
+                break;
+            default:
+                type = "empty"
+        }
+        return type;
+    }
 }
 
 //<div id={location.posX + "_" + location.posY} className={type.toString().toLowerCase()} style={blockStyle}></div>

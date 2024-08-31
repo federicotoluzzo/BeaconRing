@@ -19,6 +19,8 @@
 }
 
 .block{
+    padding: 1px;
+    display: inline-block;
     aspect-ratio: 1;
     border-radius: 10%;
 }

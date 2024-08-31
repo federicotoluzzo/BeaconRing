@@ -1,6 +1,6 @@
 export class Coordinate{
-    const private _posX:number;
-    const private _posY:number;
+    _posX:number;
+    _posY:number;
     constructor(posX:number, posY:number) {
         this._posX = posX;
         this._posY = posY;
