@@ -1,0 +1,19 @@
+.empty{
+    background-color: #CFCFCF;
+}
+
+.edge{
+    background-color: #69FD69;
+}
+
+.selected{
+    background-color: #ADFDAD;
+}
+
+.beacon{
+    background-color: #535bf2;
+}
+
+.center{
+    background-color: #CF6969;
+}
