@@ -17,3 +17,8 @@
 .center{
     background-color: #CF6969;
 }
+
+.block{
+    aspect-ratio: 1;
+    border-radius: 10%;
+}
