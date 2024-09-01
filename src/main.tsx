@@ -6,7 +6,8 @@ import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
-      <Map size={50} minDistance={40} maxDistance={45}/>
+      <input id="minDistance" type="number" min="17" value="17" onChange={function(){localStorage.setItem("minMax", this.value)}}></input>
+      <input type="number" min={localStorage.getItem("minMax")}></input>
+      <Map minDistance={17} maxDistance={30}/>
   </StrictMode>,
 )

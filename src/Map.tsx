@@ -2,13 +2,13 @@ import {Block, blockType} from "./Block.ts";
 import {Coordinate} from "./Coordinate.ts";
 import {ReactElement} from "react";
 
-export function Map(info:{size:number, minDistance:number, maxDistance:number}):ReactElement{
+export function Map(info:{minDistance:number, maxDistance:number}):ReactElement{
     const map:Block[][] = [];
     const selection = new Set<Block>();
 
-    for (let i = 0; i <= info.size; i++) {
+    for (let i = 0; i <= (info.maxDistance + 1); i++) {
         map[i] = [];
-        for (let j = 0; j <= info.size; j++) {
+        for (let j = 0; j <= (info.maxDistance + 1); j++) {
             /*if(j > i){
                 map[i][j] = new Block(new Coordinate(0, 0), blockType.EMPTY);
                 console.log("Nothing")
@@ -34,40 +34,48 @@ export function Map(info:{size:number, minDistance:number, maxDistance:number}):
         }
     }
 
-    for(let i = 0; i < 96/8; i++){
-        let minDelta = 100000000;
+    for(let i = 0; i <= 96/8; i++){
+        let minDelta = Number.MAX_VALUE;
         let closest:Block = new Block(new Coordinate(0, 0), blockType.CENTER);
+        console.log(Math.tan(Math.PI * i / 96 * 2));
+        console.log(i)
         for(const block of selection){
-            console.log(block.getYaw());
-            console.log(Math.tan(Math.PI/4.0/i));
-            if(Math.abs(block.getYaw() - Math.tan(Math.PI/4.0/i)) < minDelta){
-                minDelta = Math.abs(block.getYaw() - Math.tan(Math.PI/4.0/i));
+            if(Math.abs(block.getYaw() - Math.tan(Math.PI * i / 96 * 2)) < minDelta){
+                minDelta = Math.abs(block.getYaw() - Math.tan(Math.PI * i / 96 * 2));
                 closest = block;
             }
         }
         map[closest.location.posY][closest.location.posX].type = blockType.BEACON;
+        closest.type = blockType.BEACON;
+        console.log(map[closest.location.posY][closest.location.posX].type)
     }
 
-    const size = 2 * info.size + 1;
+    const size = 2 * (info.maxDistance + 1) + 1;
     const blocks: ReactElement[][] = Array.from({ length: size }, () => Array(size).fill(<div></div>));
 
-    for (let i = 0; i <= info.size; i++) {
-        for (let j = 0; j <= info.size; j++) {
+    for (let i = 0; i <= (info.maxDistance + 1); i++) {
+        for (let j = 0; j <= (info.maxDistance + 1); j++) {
             const type = map[i][j].getStyle();
-            blocks[info.size + i][info.size + j] = <div className={"block " + type}></div>;
-            blocks[info.size + i][info.size - j] = <div className={"block " + type}></div>;
-            blocks[info.size + j][info.size + i] = <div className={"block " + type}></div>;
-            blocks[info.size + j][info.size - i] = <div className={"block " + type}></div>;
-            blocks[info.size - i][info.size + j] = <div className={"block " + type}></div>;
-            blocks[info.size - i][info.size - j] = <div className={"block " + type}></div>;
-            blocks[info.size - j][info.size + i] = <div className={"block " + type}></div>;
-            blocks[info.size - j][info.size - i] = <div className={"block " + type}></div>;
+            if(type == "beacon"){
+                console.log("debug")
+            }
+            if(j < i){
+                continue;
+            }
+            blocks[(info.maxDistance + 1) + i][(info.maxDistance + 1) + j] = <div className={"block " + type}></div>;
+            blocks[(info.maxDistance + 1) + i][(info.maxDistance + 1) - j] = <div className={"block " + type}></div>;
+            blocks[(info.maxDistance + 1) + j][(info.maxDistance + 1) + i] = <div className={"block " + type}></div>;
+            blocks[(info.maxDistance + 1) + j][(info.maxDistance + 1) - i] = <div className={"block " + type}></div>;
+            blocks[(info.maxDistance + 1) - i][(info.maxDistance + 1) + j] = <div className={"block " + type}></div>;
+            blocks[(info.maxDistance + 1) - i][(info.maxDistance + 1) - j] = <div className={"block " + type}></div>;
+            blocks[(info.maxDistance + 1) - j][(info.maxDistance + 1) + i] = <div className={"block " + type}></div>;
+            blocks[(info.maxDistance + 1) - j][(info.maxDistance + 1) - i] = <div className={"block " + type}></div>;
         }
     }
 
     return (
         <>
-            <div style={{"aspectRatio":1, "width": 505, "display": "grid", "gridTemplateColumns": "1fr ".repeat(2 * info.size + 1)}}>
+            <div style={{"aspectRatio":1, "width": 1000, "display": "grid", "gridTemplateColumns": "1fr ".repeat(2 * (info.maxDistance + 1) + 1)}}>
                 {blocks}
             </div>
         </>

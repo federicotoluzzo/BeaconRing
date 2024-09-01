@@ -19,8 +19,7 @@
 }
 
 .block{
-    padding: 1px;
+    border: 1px solid black;
     display: inline-block;
     aspect-ratio: 1;
-    border-radius: 10%;
 }
